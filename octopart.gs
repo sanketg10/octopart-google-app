@@ -190,6 +190,30 @@ function Part(part) {
 
     throw "No offers found.";
   };
+  
+this.getLowestPrice = function(distributor, qty, currency) {
+    qty = typeof qty !== "undefined"? qty: 1;
+    currency = typeof currency !== "undefined"? currency: "USD";
+
+        for (var i = 0; i < this._part.offers.length; i++) {
+        var offer = new PartOffer(this._part.offers[i]);
+        if (offer.hasPriceInCurrency(currency) && offer.getSellerName() == "Digi-Key")
+          var offer1= offer;
+        if (offer.hasPriceInCurrency(currency) && offer.getSellerName() == "Mouser")
+          var offer2= offer;
+        if (offer.hasPriceInCurrency(currency) && offer.getSellerName() == "Newark")
+          var offer3= offer; 
+      
+      var min = offer1; 
+      if (offer2 < offer1) 
+      min = offer2; 
+      if (offer3 < offer2) 
+      min = offer3; 
+      
+      return min; 
+  };
+
+
 
   this.getOctopartUrl = function() {
     return this._part.octopart_url;
