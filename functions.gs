@@ -67,6 +67,17 @@ function OCTOPART_AVERAGE_PRICE(mpn_or_sku, manuf, qty, currency) {
   }
 }
 
+function OCTOPART_LOWEST_PRICE(mpn_or_sku, manuf, qty, currency) {
+  try {
+    var octopart = new Octopart();
+    var matches = octopart.match(mpn_or_sku, manuf);
+    var result = matches.getResult(0);
+    var part = result.getPart(0);
+    return part.getLowestPrice(qty, currency);
+  } catch (e) {
+    return "No offer found";
+  }
+}
 
 /**
  * @param {string} mpn_or_sku is the search term. Search for components by manufacturer and/or part number. Part number terms may contain wildcards (“*”) but must also contain at least three non-wildcard characters.
